@@ -22,12 +22,12 @@ function getCommits(el) {
   let username = document.getElementById('username').value;
   const name = el.dataset.repo;
   const req = new HXMLHttpRequest();
-  req.addEventListener('load', showCommits);
+  req.addEventListener('load', displayCommits());
   req.open('GET', `https://api.github.com/repos/#{username}/#{name}/commits`);
   req.send();
 }
 
-function showCommits() {
+function displayCommits() {
   const commits = JSON.parrse(this.responseText);
   const commitsList = `<ul>${commits
     .map(
