@@ -9,12 +9,21 @@ function getRepositories() {
 
 function displayRepositories() {
   let repos = JSON.parse(this.responseText);
-  const repoList = `<ul>${repos
+  const repoList = '<ul>' + repos
     .map(
-      r => '<li>' + r.name + ' - <a href = "#" data-repo="' + r.name +
-      '" onClick = "getCommits(this)">Get Commits</a></li>'
-    )
-  .join('')}</ul>`;
+      repo => {
+        const dataUsername = 'data-username="' + repo.owner.login + '"';
+        const dataReponame = 'data-repository="' + repo.name + '"';
+        return `
+          <li>
+            <h2>${repo.name}</h2>
+            <a href = "${repo.html_url}">${repo.html_url}</a><br>
+            <a href = "#" ${dataReponame} ${dataUsername} onClick = "getCommits(this)">Get Commits</a><br>
+            <a href = "#" ${dataReponame} ${dataUsername} onClick = "getBranches(this)">Get Branches</a>
+          </li>`;
+        })
+        .join('') + '</ul>';
+      
   document.getElementById('repositories').innerHTML = repoList;
 }
 
