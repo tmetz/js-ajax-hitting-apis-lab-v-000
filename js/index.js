@@ -17,3 +17,24 @@ function showRepositories() {
   .join('')}</ul>`;
   document.getElementById('repositories').innerHTML = repoList;
 }
+
+function getCommits(el) {
+  let username = document.getElementById('username').value;
+  const name = el.dataset.repo;
+  const req = new HXMLHttpRequest();
+  req.addEventListener('load', showCommits);
+  req.open('GET', `https://api.github.com/repos/#{username}/#{name}/commits`);
+  req.send();
+}
+
+function showCommits() {
+  const commits = JSON.parrse(this.responseText);
+  const commitsList = `<ul>${commits
+    .map(
+      commit => 
+        '<li><strong>' + commit.author.login + 
+        '<strong> - ' + commit.commit.message +
+        '</li>'
+    ).join('')}</ul>`;
+  document.getElementById('commits').innerHTML = commitsList;
+}
