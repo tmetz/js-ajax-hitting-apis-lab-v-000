@@ -23,7 +23,7 @@ function displayRepositories() {
           </li>`;
         })
         .join('') + '</ul>';
-      
+
   document.getElementById('repositories').innerHTML = repoList;
 }
 
